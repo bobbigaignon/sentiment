@@ -1,0 +1,25 @@
+<!doctype html>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.js"></script>
+<title>Sentiment - {{ movie_title }}</title>
+
+<table>
+    <tr>
+        <td>
+            <IMG src="{{ url_for('static', filename=movie_poster) }}"
+                 width=400 height=600 style="margin:0px 100px 0px 0px;">
+        </td>
+        <td class="movie-score" style="font-size:xx-large;"></td>
+    </tr>
+</table>
+
+<script type=text/javascript>
+  $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+  $(function() {
+    setInterval(function() {
+      $.getJSON($SCRIPT_ROOT + '/score_movie/{{movie_key}}', function(data) {
+        $(".movie-score").text(data.score + "%");
+      });
+      return false;
+    }, 1000);
+  });
+</script>
