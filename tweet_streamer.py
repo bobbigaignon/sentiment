@@ -21,6 +21,7 @@ class InvalidSentimentLabelException(Exception): pass
 
 
 def tweet_stream(track):
+	"""Stream Twitter's public API for tweets matching a topic of interest."""
 	payload = {
 		'track': track,
 	}
@@ -42,6 +43,7 @@ def tweet_stream(track):
 		raise StreamException("Stream ended unexpectedly")
 
 def compute_sentiment(phrase):
+	"""Analyze a tweet for its sentiment."""
 	payload = {
 		'text': phrase,
 	}
@@ -58,6 +60,8 @@ def compute_sentiment(phrase):
 
 
 def parse_tweets(title):
+	"""Parse live tweets for a given movie and store them into the DB. The
+	stored object will contain the sentiment associated to the tweet."""
 	movie_meta = MOVIES[title]
 	for tweet_id, tweet_text in tweet_stream(movie_meta.track_term):
 		print "Processing %d" % tweet_id
